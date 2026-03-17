@@ -24,7 +24,7 @@ class RoomInventory {
 
    // Update availability
    public void updateAvailability(String roomType, int count) {
-      roomAvailability.put(roomType, count);
+      roomAvailability.pugt(roomType, count);
    }
 }
 
