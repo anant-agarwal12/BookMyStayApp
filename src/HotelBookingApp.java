@@ -1,64 +1,57 @@
-/*
-    Use Case 2 : Room types and static availability
- */
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+class RoomInventory {
 
-abstract class Room{
-    protected int numberOfBeds;
-    protected int squareFeet;
-    protected double pricePerNight;
-    static int availibility = 3;
+   private Map<String, Integer> roomAvailability;
 
-    public Room(int numberOfBeds , int squareFeet , double pricePerNight){
-        this.numberOfBeds = numberOfBeds;
-        this.squareFeet = squareFeet;
-        this.pricePerNight = pricePerNight;
-        availibility -= 1;
-    }
+   // Constructor
+      RoomInventory() {
+      roomAvailability = new HashMap<>();
+      initializeInventory();
+   }
 
-    public void displayRoomDetails(){
-        System.out.println("Number Of Beds: " + numberOfBeds);
-        System.out.println("Room size: " + squareFeet + " sq. ft");
-        System.out.println("Price Per Night: " + pricePerNight);
-        System.out.println("Room Availability After Booking: " + availibility);
-    }
+   // Initialize default room data
+   private void initializeInventory() {
+      roomAvailability.put("Single", 10);
+      roomAvailability.put("Double", 5);
+      roomAvailability.put("Suite", 2);
+   }
 
+   // Get current availability
+   public Map<String, Integer> getRoomAvailability() {
+      return roomAvailability;
+   }
+
+   // Update availability
+   public void updateAvailability(String roomType, int count) {
+      roomAvailability.put(roomType, count);
+   }
 }
-
-class SingleRoom extends Room{
-    public SingleRoom(){
-        super(1,250,1500.0);
-    }
-}
-
-class DoubleRoom extends Room{
-    public DoubleRoom(){
-        super(2,400,2500.0);
-    }
-}
-
-class SuiteRoom extends Room{
-    public SuiteRoom(){
-        super(3,500,5000.0);
-    }
-}
-
 
 public class HotelBookingApp{
-    public static void main(String[] args){
-       SingleRoom room1 = new SingleRoom();
-       System.out.println("Room Type: Single Room");
-       room1.displayRoomDetails();
-       System.out.println();
 
-       DoubleRoom room2 = new DoubleRoom();
-       System.out.println("Room Type: Double Room");
-       room2.displayRoomDetails();
-       System.out.println();
+   public static void main(String[] args) {
 
-       SuiteRoom room3 = new SuiteRoom();
-       System.out.println("Room Type: Suite Room");
-       room3.displayRoomDetails();
-    }
+      // Step 1: Initialize inventory
+      RoomInventory inventory = new RoomInventory();
+
+      // Step 2: Display initial availability
+      System.out.println("Initial Room Availability:");
+      printInventory(inventory.getRoomAvailability());
+
+      // Step 3: Update some values
+      inventory.updateAvailability("Single", 8);
+      inventory.updateAvailability("Suite", 1);
+
+      // Step 4: Display updated availability
+      System.out.println("\nUpdated Room Availability:");
+      printInventory(inventory.getRoomAvailability());
+   }
+
+   // Helper method to print inventory
+   public static void printInventory(Map<String, Integer> map) {
+      for (String roomType : map.keySet()) {
+         System.out.println(roomType + " Rooms: " + map.get(roomType));
+      }
+   }
 }
-
